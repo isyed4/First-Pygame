@@ -8,6 +8,9 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("First Game!")
 
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+BORDER = pygame.Rect(WIDTH/2 - 5, 0, 10, HEIGHT)
 
 FPS = 60
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55, 40
@@ -26,19 +29,20 @@ RED_SPACESHIP_IMAGE = pygame.transform.rotate(pygame.transform.scale(
 
 def draw_window(red, yellow):
     WIN.fill((WHITE))
+    pygame.draw.rect(WIN, BLACK, BORDER )
     # use blit when you want to draw a surface on the screen
     WIN.blit(YELLOW_SPACESHIP_IMAGE, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP_IMAGE, (red.x, red.y))
     pygame.display.update()
 
 def yellow_handle_movement(keys_pressed, yellow):
-    if keys_pressed[pygame.K_a]: # LEFT
+    if keys_pressed[pygame.K_a] and yellow.x - velocity > 0: # LEFT
         yellow.x -= velocity
-    if keys_pressed[pygame.K_d]: # RIGHT
+    if keys_pressed[pygame.K_d] and yellow.x + velocity + yellow.width < BORDER.x: # RIGHT
         yellow.x += velocity
-    if keys_pressed[pygame.K_w]: # UP
+    if keys_pressed[pygame.K_w] and yellow.y - velocity > 0: # UP
         yellow.y -= velocity
-    if keys_pressed[pygame.K_s]: # DOWN
+    if keys_pressed[pygame.K_s] and yellow.y + velocity + yellow.height < HEIGHT: # DOWN
         yellow.y += velocity
 
 def red_handle_movement(keys_pressed, red):
