@@ -31,6 +31,26 @@ def draw_window(red, yellow):
     WIN.blit(RED_SPACESHIP_IMAGE, (red.x, red.y))
     pygame.display.update()
 
+def yellow_handle_movement(keys_pressed, yellow):
+    if keys_pressed[pygame.K_a]: # LEFT
+        yellow.x -= velocity
+    if keys_pressed[pygame.K_d]: # RIGHT
+        yellow.x += velocity
+    if keys_pressed[pygame.K_w]: # UP
+        yellow.y -= velocity
+    if keys_pressed[pygame.K_s]: # DOWN
+        yellow.y += velocity
+
+def red_handle_movement(keys_pressed, red):
+    if keys_pressed[pygame.K_LEFT]: # LEFT
+        red.x -= velocity
+    if keys_pressed[pygame.K_RIGHT]: # RIGHT
+        red.x += velocity
+    if keys_pressed[pygame.K_UP]: # UP
+        red.y -= velocity
+    if keys_pressed[pygame.K_DOWN]: # DOWN
+        red.y += velocity
+
 
 # pygame event loop, what is going to pop up on screen?
 def main():
@@ -46,8 +66,9 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
         keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[pygame.K_a]: # LEFT
-            yellow.x -= velocity
+        yellow_handle_movement(keys_pressed, yellow)
+        red_handle_movement(keys_pressed, red)
+        
 
 
         draw_window(red, yellow)
